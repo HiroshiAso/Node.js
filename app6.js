@@ -36,7 +36,8 @@ const getFromClient = (request, response) => {
       // 読み込んだテンプレートをデータでレンダリング
       content = ejs.render(other_page, {
         title: "Other",
-        content: "これは新しく用意したページです。"
+        content: "これは新しく用意したページです。",
+        message: "これは、他のページのメッセージです。"
       });
             // レスポンスヘッダーの設定
       response.setHeader('Content-Type', 'text/html');
