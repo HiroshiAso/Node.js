@@ -24,7 +24,7 @@ const getFromClient = (request, response) => {
         content: "This is EJS sample page.",
         message: "これは、EJSのサンプルページです。"
       });
-
+      console.log(query);
       if (query.msg != undefined) {
         content += `あなたは「${query.msg}」と送りました。`;
       }
@@ -45,6 +45,7 @@ const getFromClient = (request, response) => {
           });
           request.on('end', () => {
               const post_data = qs.parse(body);
+              console.log(post_data);
               content = ejs.render(other_page, {
                   title: "Other",
                   content: "これは新しく用意したページです。",

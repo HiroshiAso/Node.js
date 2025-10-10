@@ -2,7 +2,6 @@ const http = require('http');
 const fs = require('fs');
 const ejs = require('ejs');
 const url = require('url');
-const qs = require('querystring');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
@@ -12,8 +11,6 @@ const cssRoot = path.join(__dirname, 'css');
 const templates = {
   home: fs.readFileSync(path.join(viewRoot, 'home.ejs'), 'utf-8'),
   about: fs.readFileSync(path.join(viewRoot, 'about.ejs'), 'utf-8'),
-  services: fs.readFileSync(path.join(viewRoot, 'services.ejs'), 'utf-8'),
-  contact: fs.readFileSync(path.join(viewRoot, 'contact.ejs'), 'utf-8'),
   faq: fs.readFileSync(path.join(viewRoot, 'faq.ejs'), 'utf-8')
 };
 
@@ -59,11 +56,6 @@ const getFromClient = (request, response) => {
       response.end(render('about', { currentPath, pageTitle: 'このサイトについて画面' }));
       break;
 
-    case '/services':
-      response.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
-      response.end(render('services', { currentPath, pageTitle: '提供コンテンツ画面' }));
-      break;
-
     case '/faq':
       response.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
       response.end(
@@ -73,39 +65,6 @@ const getFromClient = (request, response) => {
           faqItems
         })
       );
-      break;
-
-    case '/contact':
-      if (request.method === 'POST') {
-        let body = '';
-        request.on('data', chunk => {
-          body += chunk;
-        });
-        request.on('end', () => {
-          const params = qs.parse(body);
-          const feedback = {
-            name: (params.name || '').trim(),
-            message: (params.message || '').trim()
-          };
-          response.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
-          response.end(
-            render('contact', {
-              currentPath,
-              pageTitle: 'お問い合わせ',
-              feedback
-            })
-          );
-        });
-      } else {
-        response.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
-        response.end(
-          render('contact', {
-            currentPath,
-            pageTitle: 'お問い合わせ',
-            feedback: { name: '', message: '' }
-          })
-        );
-      }
       break;
 
     default:
