@@ -16,16 +16,16 @@ console.log('Server start!');
 
 // createServerの処理
 function getFromClient(request, response) {
-  var url_parts = url.parse(request.url, true); //☆trueに
+  var url_parts = url.parse(request.url, true);
 
   switch (url_parts.pathname) {
 
     case '/':
-      response_index(request, response); //☆修正
+      response_index(request, response);
       break;
 
     case '/other':
-      response_other(request, response); //☆修正
+      response_other(request, response);
       break;
 
     case '/style.css':
