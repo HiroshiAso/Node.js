@@ -50,39 +50,62 @@ function getFromClient(request, response) {
 
 // 画面に表示するメッセージを保持する変数。
 // 新しいメッセージが送られてくると、このオブジェクトが更新されます。
+// データ
 var data = { msg: 'no message...' };
 
+// indexのアクセス処理
 function response_index(request, response) {
-  // フォームから送られた場合 (POST) は、本文を読み取ってから表示処理へ。
+  // POSTアクセス時の処理
   if (request.method == 'POST') {
     var body = '';
+
+    // データ受信のイベント処理
     request.on('data', (data) => {
-      // データは複数回に分割されて届くことがあるので連結します。
       body += data;
     });
 
+    // データ受信終了のイベント処理
     request.on('end', () => {
-      // 受け取った URL エンコード文字列をオブジェクトに変換します。
       data = qs.parse(body);
+      // クッキーの保存
+      setCookie('msg', data.msg, response);
       write_index(request, response);
     });
   } else {
-    // GET アクセスなど、データが送られていない場合はそのまま表示します。
     write_index(request, response);
   }
 }
 
+// indexのページ作成
 function write_index(request, response) {
-  // 画面に表示するメッセージ。テンプレートへ渡す文字列です。
   var msg = "※伝言を表示します。"
-  // EJS テンプレートへ渡すデータをまとめ、HTML を生成します。
+  var cookie_data = getCookie('msg', request);
   var content = ejs.render(index_page, {
     title: "Index",
     content: msg,
     data: data,
+    cookie_data: cookie_data,
   });
-  // HTML をクライアントへ送り返します。
   response.writeHead(200, { 'Content-Type': 'text/html' });
   response.write(content);
   response.end();
+}
+
+// クッキーの値を設定
+function setCookie(key, value, response) {
+  var cookie = escape(value);
+  response.setHeader('Set-Cookie', [key + '=' + cookie]);
+}
+// クッキーの値を取得
+function getCookie(key, request) {
+  var cookie_data = request.headers.cookie != undefined ?
+    request.headers.cookie : '';
+  var data = cookie_data.split(';');
+  for (var i in data) {
+    if (data[i].trim().startsWith(key + '=')) {
+      var result = data[i].trim().substring(key.length + 1);
+      return unescape(result);
+    }
+  }
+  return '';
 }
