@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 # Install only production dependencies
 COPY package*.json ./
+RUN apk add --no-cache python3 make g++
 RUN npm install --production
 
 # Copy the application source
