@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>FAQ</title>
+  <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+  <%- include('partials/header', { pageTitle: 'よくある質問', currentPath }) %>
+  <main style="display:flex; justify-content:center; padding:40px 16px;">
+    <section style="max-width:720px; width:100%;">
+      <h2 style="font-size:2.4rem; margin:0 0 24px; letter-spacing:0.08em;">よくある質問</h2>
+      <ul style="list-style:none; margin:0; padding:0; display:grid; gap:24px;">
+        <% faqItems.forEach(function(item) { %>
+          <%- include('partials/data_item', { item: item }) %>
+        <% }) %>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

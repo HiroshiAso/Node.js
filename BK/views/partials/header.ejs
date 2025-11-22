@@ -1,0 +1,28 @@
+<header class="site-header" role="banner">
+  <h1><%= pageTitle %></h1>
+  <nav aria-label="ページナビゲーション">
+    <ul>
+      <li>
+        <% if (currentPath === '/') { %>
+          <strong>Home</strong>
+        <% } else { %>
+          <a href="/">Home</a>
+        <% } %>
+      </li>
+      <li>
+        <% if (currentPath === '/about') { %>
+          <strong>About</strong>
+        <% } else { %>
+          <a href="/about">About</a>
+        <% } %>
+      </li>
+      <li>
+        <% if (currentPath === '/faq') { %>
+          <strong>FAQ</strong>
+        <% } else { %>
+          <a href="/faq">FAQ</a>
+        <% } %>
+      </li>
+    </ul>
+  </nav>
+</header>

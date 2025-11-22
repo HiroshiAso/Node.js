@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>メンテナンス画面</title>
+</head>
+<body>
+  <h1>メンテナンス画面</h1>
+
+  <% if (error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+
+  <table border="1" cellpadding="8">
+    <thead>
+      <tr>
+        <th><%= labels.when %></th>
+        <th><%= labels.where %></th>
+        <th><%= labels.who %></th>
+        <th><%= labels.what %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <% if (lists.when.length) { %>
+            <ul>
+              <% lists.when.forEach((item) => { %>
+                <li><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </td>
+        <td>
+          <% if (lists.where.length) { %>
+            <ul>
+              <% lists.where.forEach((item) => { %>
+                <li><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </td>
+        <td>
+          <% if (lists.who.length) { %>
+            <ul>
+              <% lists.who.forEach((item) => { %>
+                <li><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </td>
+        <td>
+          <% if (lists.what.length) { %>
+            <ul>
+              <% lists.what.forEach((item) => { %>
+                <li><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form action="/add" method="POST">
+    <label>
+      いつ/どこで/誰が/何を:
+      <select name="type">
+        <option value="when">いつ</option>
+        <option value="where">どこで</option>
+        <option value="who">誰が</option>
+        <option value="what">何を</option>
+      </select>
+    </label>
+    <label>
+      内容:
+      <input type="text" name="text" />
+    </label>
+    <button type="submit">追加</button>
+  </form>
+
+  <p><a href="/">戻る</a></p>
+</body>
+</html>
