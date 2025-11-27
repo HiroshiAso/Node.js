@@ -3,7 +3,7 @@ version: "3.9"
 services:
   todoApp:
     build:
-      context: ./todoApp
+      context: ./omikuziApp
       dockerfile: Dockerfile
     depends_on:
       - db
