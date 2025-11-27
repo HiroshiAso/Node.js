@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  ex-gen-app:
+  todoApp:
     build:
-      context: ./ex-gen-app
+      context: ./todoApp
       dockerfile: Dockerfile
     depends_on:
       - db
