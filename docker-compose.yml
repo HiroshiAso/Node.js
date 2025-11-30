@@ -1,14 +1,20 @@
 version: "3.9"
 
 services:
+  # アプリケーションサーバーのサービス定義
   omikuziApp:
     build:
+      # ビルドコンテキスト（Dockerfileがあるディレクトリ）
       context: ./omikuziApp
+      # 使用するDockerfileの名前
       dockerfile: Dockerfile
+    # データベースサービスが起動してから起動する
     depends_on:
       - db
+    # ホストのポート3000をコンテナのポート3000にマッピング
     ports:
       - "3000:3000"
+    # アプリケーションで使用する環境変数
     environment:
       NODE_ENV: production
       PORT: 3000
@@ -18,22 +24,33 @@ services:
       DATABASE_PASSWORD: exgen_pass
       DATABASE_NAME: exgen_app
 
+  # MySQLデータベースのサービス定義
   db:
+    # MySQL 8.0の公式イメージを使用
     image: mysql:8.0
+    # 手動で停止しない限り、常に再起動する
     restart: unless-stopped
+    # MySQLの環境変数設定
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: exgen_app
       MYSQL_USER: exgen_user
       MYSQL_PASSWORD: exgen_pass
       TZ: Asia/Tokyo
+    # 文字コード設定（utf8mb4を使用）
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # ホストのポート3306をコンテナのポート3306にマッピング
     ports:
       - "3306:3306"
+    # データの永続化設定
     volumes:
+      # データベースのデータを永続化（名前付きボリューム）
       - db_data:/var/lib/mysql
+      # 初期化スクリプトをマウント
       - ./mysql/init:/docker-entrypoint-initdb.d:ro
+      # 設定ファイルをマウント
       - ./mysql/conf:/etc/mysql/conf.d:ro
 
+# 名前付きボリュームの定義
 volumes:
   db_data:
