@@ -2,10 +2,10 @@ version: "3.9"
 
 services:
   # アプリケーションサーバーのサービス定義
-  omikuziApp:
+  sampleApp:
     build:
       # ビルドコンテキスト（Dockerfileがあるディレクトリ）
-      context: ./omikuziApp
+      context: ./sampleApp
       # 使用するDockerfileの名前
       dockerfile: Dockerfile
     # データベースサービスが起動してから起動する
