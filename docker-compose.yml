@@ -1,14 +1,18 @@
-version: "3.9"
+
 
 services:
-  omikuziApp:
+  # おみくじアプリのサービス定義
+  omikuziapp:
+    # ビルド設定
     build:
-      context: ./omikuziApp
+      context: ./omikuziApp # Dockerfileがあるディレクトリ
       dockerfile: Dockerfile
     depends_on:
       - db
+    # ポートフォワーディング（ホスト:コンテナ）
     ports:
       - "3000:3000"
+    # 環境変数の設定
     environment:
       NODE_ENV: production
       PORT: 3000

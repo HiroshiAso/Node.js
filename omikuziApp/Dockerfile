@@ -1,23 +1,24 @@
-# Use a lightweight Node.js runtime image
+# ベースイメージとして軽量なNode.jsを指定
 FROM node:18-alpine
 
-# Set work directory inside the container
+# コンテナ内の作業ディレクトリを設定
 WORKDIR /usr/src/app
 
-# Install only production dependencies
+# パッケージ定義ファイルをコピー
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++
+
+# 依存パッケージをインストール（本番用のみ）
 RUN npm install --production
 
-# Copy the application source
+# アプリケーションのソースコードをコピー
 COPY . .
 
-# Set environment variables expected by the app
+# 環境変数の設定
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Expose the port used by the Express app
+# 公開するポートを指定
 EXPOSE 3000
 
-# Launch the Express server
+# アプリケーションの起動コマンド
 CMD ["npm", "start"]
