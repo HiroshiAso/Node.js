@@ -2,10 +2,10 @@
 
 services:
   # おみくじアプリのサービス定義
-  omikuziapp:
+  myapp:
     # ビルド設定
     build:
-      context: ./omikuziApp # Dockerfileがあるディレクトリ
+      context: ./myapp # Dockerfileがあるディレクトリ
       dockerfile: Dockerfile
     depends_on:
       - db
