@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple TODO App</title>
+</head>
+<body>
+    <h1>TODO List</h1>
+    
+    <form action="/add" method="POST">
+        <input type="text" name="task" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        <% if (todos && todos.length > 0) { %>
+            <% todos.forEach(todo => { %>
+                <li>
+                    <%= todo.task %>
+                    <form action="/delete/<%= todo.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>No tasks yet.</li>
+        <% } %>
+    </ul>
+</body>
+</html>
