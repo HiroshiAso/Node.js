@@ -13,15 +13,15 @@ const pool = mysql.createPool({
 const initDb = async () => {
     try {
         const sql = `
-      CREATE TABLE IF NOT EXISTS todos (
+      CREATE TABLE IF NOT EXISTS tasks (
         id INT AUTO_INCREMENT PRIMARY KEY,
         task VARCHAR(255) NOT NULL
       )
     `;
         await pool.query(sql);
-        console.log('Table created or already exists');
+        console.log('テーブルは作成されたか、すでに存在します');
     } catch (err) {
-        console.log('Database not ready yet, retrying in 5 seconds...');
+        console.log('データベースはまだ準備ができていないようです、5秒後に再試行します...');
         setTimeout(initDb, 5000);
     }
 };
