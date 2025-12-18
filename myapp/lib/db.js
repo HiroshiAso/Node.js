@@ -9,23 +9,4 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
-
-const initDb = async () => {
-    try {
-        const sql = `
-      CREATE TABLE IF NOT EXISTS tasks (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        task VARCHAR(255) NOT NULL
-      )
-    `;
-        await pool.query(sql);
-        console.log('テーブルは作成されたか、すでに存在します');
-    } catch (err) {
-        console.log('データベースはまだ準備ができていないようです、5秒後に再試行します...');
-        setTimeout(initDb, 5000);
-    }
-};
-
-initDb();
-
 module.exports = pool;

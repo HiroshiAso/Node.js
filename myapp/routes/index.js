@@ -6,7 +6,7 @@ const pool = require('../lib/db');
 router.get('/', async (req, res, next) => {
     try {
         const [rows] = await pool.query('SELECT * FROM tasks');
-        res.render('index', { todos: rows });
+        res.render('index', { tasks: rows });
     } catch (err) {
         next(err);
     }
