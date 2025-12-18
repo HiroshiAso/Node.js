@@ -1,0 +1,12 @@
+{
+    "name": "sample-app",
+    "version": "1.0.0",
+    "description": "Node.js Hello World Sample App",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    }
+}
